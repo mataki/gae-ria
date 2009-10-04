@@ -4,14 +4,13 @@ require 'dm-core'
 require 'haml'
 require 'request_log_analyzer'
 
-# Configure DataMapper to use the App Engine datastore
 DataMapper.setup(:default, "appengine://auto")
 
-# Create your model class
 class LogFile
   include DataMapper::Resource
 
   property :id, Serial
+  property :split, Integer
   property :content, Text
   property :filename, Text
 end
@@ -41,16 +40,26 @@ end
 
 get '/analyze' do
   @logs = LogFile.all
-  sio = StringIO.new
   @htmls = @logs.map do |log|
+    sio = StringIO.new
     RequestLogAnalyzer::Controller.build(:output       => RequestLogAnalyzer::Output::HTML,
                                          :file         => sio,
-                                         :source_files => log.content,
+                                         :source_files => StringIO.new(log.content),
                                          :no_progress  => true
                                          ).run!
     if out = sio.string
-      AnalizedHtml.create(:content => out, :filename => log.filename)
+      ah = AnalizedHtml.create(:content => out, :filename => log.filename)
+      log.destroy
     end
-  end.conpact
+    ah
+  end
   haml :analyze
+end
+
+get '/r/:id' do
+  if html = AnalizedHtml.get(params[:id])
+    html.content
+  else
+    "Not Found"
+  end
 end

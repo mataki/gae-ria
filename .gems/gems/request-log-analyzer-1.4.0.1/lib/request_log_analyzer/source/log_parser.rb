@@ -60,6 +60,8 @@ module RequestLogAnalyzer::Source
         parse_file(@source_files, options, &block)
       when Array
         parse_files(@source_files, options, &block)
+      when StringIO
+        parse_io(@source_files, options, &block)
       else
         raise "Unknown source provided"
       end
