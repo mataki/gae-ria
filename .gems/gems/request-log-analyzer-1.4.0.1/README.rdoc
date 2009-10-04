@@ -1,0 +1,39 @@
+= Request-log-analyzer
+
+This is a simple command line tool to analyze request log files in various formats to produce a performance report. Its purpose is to find what actions are best candidates for optimization.
+
+* Analyzes Rails request logs, Merb request logs, Apache access logs and more, or parses any other log format you specify.
+* Combines multiple files and decompresses compressed files, which comes in handy if you are using logrotate.
+* Uses several metrics, including cumulative request time, mean request time, process blockers, database and rendering time, HTTP methods and statuses, Rails action cache statistics, etc.) (Sample output: http://wiki.github.com/wvanbergen/request-log-analyzer/sample-output)
+* Low memory footprint and reasonably fast, so it is safe to run on a production server.
+* MIT licensed
+
+See the project wiki at http://wiki.github.com/wvanbergen/request-log-analyzer for documentation and additional information.
+
+== Installation & basic usage
+
+Install request-log-analyzer as a Ruby gem (you might need to run this command
+as root by prepending +sudo+ to it):
+
+  $ gem install request-log-analyzer
+
+To analyze a Rails log file and produce a performance report, run
+request-log-analyzer like this:
+
+  $ request-log-analyzer log/production.log
+
+For more details, other file formats, and available command line options, see the project's wiki at http://wiki.github.com/wvanbergen/request-log-analyzer
+
+== Additional information
+
+Request-log-analyzer was designed and built by Willem van Bergen and Bart ten
+Brinke.
+
+Do you have a rails application that is not performing as it should? If you need
+an expert to analyze your application, feel free to contact either Willem van
+Bergen (willem@railsdoctors.com) or Bart ten Brinke (bart@railsdoctors.com).
+
+* Project wiki at GitHub: http://wiki.github.com/wvanbergen/request-log-analyzer
+* railsdoctors homepage: http://railsdoctors.com
+* wvanbergen's blog posts: http://techblog.floorplanner.com/tag/request-log-analyzer
+* barttenbrinke's blog posts: http://movesonrails.com/articles/tag/analyzer

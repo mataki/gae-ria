@@ -1,0 +1,10 @@
+.svn/
+.DS_Store
+request-log-analyzer-*.gem
+requests.db
+/pkg
+/doc
+/tmp
+/classes
+/files
+/coverage
